@@ -513,7 +513,7 @@ footer {
 
 @media (max-width: 1920px) {
   html {
-    zoom: 0.7;
+    zoom: 0.8;
   }
 
   /* Hier greift die 143%-Größe für das Video bei 1080p, um den Zoom auszugleichen */
