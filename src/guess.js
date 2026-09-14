@@ -11,6 +11,7 @@ var submit_button = document.getElementById("submit-button");
 var sanses = document.getElementById("sanses");
 var sans_lines = document.getElementById("sans-lines");
 var stat_streak = document.getElementById("stat-streak");
+var volume_slider = document.getElementById("volume-slider");
 var time = 100; // 100, 500, 2000, 8000, 15000
 
 var useUndertale = true;
@@ -370,6 +371,10 @@ function GenerateSongs() {
     songs.appendChild(song);
   }
 }
+
+volume_slider.addEventListener("change", () => {
+  play_audio.volume = volume_slider.value;
+});
 
 function shuffleObject(obj) {
   const entries = Object.entries(obj);
