@@ -224,7 +224,7 @@ var deltarune_chater34_songs = {
   "./sound/deltarune/Chapter34/29 Breath.ogg": "C3 - Breath",
   "./sound/deltarune/Chapter34/30 Black Knife.ogg": "C3 - Black Knife",
   "./sound/deltarune/Chapter34/32 Dump.ogg": "C3 - Dump",
-  "./sound/deltarune/Chapter34/33 SWORD.ogg": "C4 - SWORD",
+  "./sound/deltarune/Chapter34/33 SWORD.ogg": "C3 - SWORD",
   "./sound/deltarune/Chapter34/34 NORTHERNLIGHT.ogg": "C4 - NORTHERNLIGHT",
   "./sound/deltarune/Chapter34/35 GLACEIR.ogg": "C4 - GLACEIR",
   "./sound/deltarune/Chapter34/36 BIT ROOTS.ogg": "C4 - BIT ROOTS",
