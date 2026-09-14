@@ -400,30 +400,41 @@ function Reselect() {
   RegenerateSong();
 }
 
+var hasBeatenPapyrus = false;
 var currentSansImage = 0;
 function UpdateSans() {
   if (streak % 2 == 0) currentSansImage += 1;
 
+  if (currentSansImage > sanses_images.length) {
+    sanses.src = sanses_images[0];
+    SansWriteSentence("Congrats, you beat my brother.", (sound = false));
+    hasBeatenPapyrus = true;
+    return;
+  }
   sanses.src = sanses_images[currentSansImage];
   switch (streak) {
     case 4:
+      if (hasBeatenPapyrus) return;
       currentDialouge = 99;
       SansWriteSentence("i know that song.", (sound = false));
       break;
     case 8:
+      if (hasBeatenPapyrus) return;
       SansWriteSentence("you're too good...", (sound = false));
       break;
     case 14:
+      if (hasBeatenPapyrus) return;
       SansWriteSentence("bro stop", (sound = false));
       break;
     case 16:
+      if (hasBeatenPapyrus) return;
       SansWriteSentence(
         "could you please not beat my brother?",
         (sound = false),
       );
       break;
     case 20:
-      SansWriteSentence("Okay you beat him, congrats.", (sound = false));
+      SansWriteSentence("Okay you beat my score, congrats.", (sound = false));
       sanses.src = sanses_images[0];
       break;
   }
