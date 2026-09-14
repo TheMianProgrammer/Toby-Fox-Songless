@@ -164,7 +164,12 @@
         <source id="play_audio_source" type="audio/ogg" />
       </audio>
 
-      <section class="guess-history" id="guess-history"></section>
+      <section class="guess-history" id="guess-history">
+        <div class="guess-entry current">
+          <span class="guess-star">*</span>
+          <span></span>
+        </div>
+      </section>
 
       <footer>Toby Fox Songless</footer>
       <footer>
@@ -185,11 +190,11 @@
 
           <div class="stat">
             <span class="stat-star">*</span>
-            <span>Points: 0</span>
+            <span id="points">Points: 0</span>
           </div>
         </div>
 
-        <div class="sans-box" onclick="AdvanceSansStory()">
+        <div class="sans-box" id="sans-box" onclick="AdvanceSansStory()">
           <div class="sans-image">
             <img src="img/sans/Happy.png" alt="Sans" id="sanses" />
           </div>
@@ -198,6 +203,13 @@
             <span class="stat-star">*</span>
             <span id="sans-lines" class="sans-font"
               >Hey. Iv'e got some news for you.</span
+            >
+          </div>
+        </div>
+        <div class="sans-box" onclick="ToggleSanses()">
+          <div id="toggle-sanses">
+            <span class="song-toggle" style="font-size: small">
+              <span class="toggle-star">*</span>Disable Sanses</span
             >
           </div>
         </div>

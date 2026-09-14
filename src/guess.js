@@ -408,7 +408,7 @@ function UpdateSans() {
   switch (streak) {
     case 4:
       currentDialouge = 99;
-      SansWriteSentence("i like that song.", (sound = false));
+      SansWriteSentence("i know that song.", (sound = false));
       break;
     case 8:
       SansWriteSentence("you're too good...", (sound = false));
@@ -456,12 +456,17 @@ function HideAllMarkers() {
     .classList.remove("marker-highlighted");
 }
 
+var points = 0;
 function Guess() {
   if (time > 15000) return;
   var UserGuess = document.getElementById("song_name").value;
   if (UserGuess.toLowerCase() == currentSong.toLowerCase()) {
     next_song.style = "display:flex";
     info.innerHTML = "Correct Guess!";
+    if (time < 500) points += 5;
+    else if (time < 2000) points += 3;
+    else if (time < 8000) points += 2;
+    else if (time < 15000) points += 1;
     time = 1000000;
     HideAllMarkers();
     streak += 1;
@@ -540,11 +545,13 @@ function Guess() {
         UpdateSans();
         stat_streak.innerText = "Streak: 0";
         info.innerHTML = currentSong;
+        points -= Math.floor(points / 2);
         time = 1000000;
         next_song.style = "display:flex";
         break;
     }
   }
+  document.getElementById("points").innerText = "Points: " + points;
   song_name.value = "";
   submit_button.lastChild.nodeValue = "SKIP";
 }
@@ -560,7 +567,7 @@ function SansWriteSentence(text, sound = true) {
 SansWriteSentence("Hey. I've got some news for ya.");
 function SansWriteChar(index, text, time = 80, sound = true) {
   try {
-    if (sound) {
+    if (sound && !sansesActive) {
       let voiceClone = sansVoice.cloneNode();
       voiceClone.volume = 0.5;
       voiceClone.play().catch(() => {});
@@ -574,6 +581,44 @@ function SansWriteChar(index, text, time = 80, sound = true) {
     () => SansWriteChar(index + 1, text, time, sound),
     time,
   );
+}
+
+var voice_sans_appear = new Audio("sound/voice_sans_appear.wav");
+var voice_sans_disappear = new Audio("sound/voice_sans_disappear.wav");
+voice_sans_appear.load();
+voice_sans_disappear.load();
+
+var sansesActive = false;
+function ToggleSanses() {
+  var toggle_sanses = document.getElementById("toggle-sanses");
+  toggle_sanses.innerHTML = "";
+  sansesActive = !sansesActive;
+  var toggle_star = document.createElement("span");
+  toggle_star.innerHTML = "*";
+  toggle_star.classList.add("toggle-star");
+  if (!sansesActive) {
+    var disable_sans = document.createElement("span");
+    disable_sans.classList.add("song-toggle");
+    disable_sans.style = "font-size: small";
+    disable_sans.innerText = "Disable Sanses";
+    disable_sans.prepend(toggle_star);
+    toggle_sanses.appendChild(disable_sans);
+    document.getElementById("sans-box").removeAttribute("hidden");
+
+    let voiceClone = voice_sans_appear.cloneNode();
+    voiceClone.play();
+  } else {
+    var enable_sans = document.createElement("span");
+    enable_sans.classList.add("song-toggle");
+    enable_sans.classList.add("active");
+    enable_sans.style = "font-size: small";
+    enable_sans.innerText = "Disable Sanses";
+    enable_sans.prepend(toggle_star);
+    toggle_sanses.appendChild(enable_sans);
+    document.getElementById("sans-box").setAttribute("hidden", true);
+    let voiceClone = voice_sans_disappear.cloneNode();
+    voiceClone.play();
+  }
 }
 
 var sansVoice = new Audio("sound/voice_sans.mp3");
@@ -614,7 +659,7 @@ function AdvanceSansStory() {
       currentDialouge++;
       break;
     case 7:
-      SansWriteSentence("( btw points are useless )");
+      SansWriteSentence("( btw points aren't useless anymore )");
       currentDialouge++;
       break;
     case 90:
