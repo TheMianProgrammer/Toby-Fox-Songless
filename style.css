@@ -1,0 +1,579 @@
+@import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
+
+/* =========================================================
+   General
+   ========================================================= */
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  min-height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+
+  background: #000;
+  color: #fff;
+  font-family: "Press Start 2P", monospace;
+  image-rendering: pixelated;
+}
+
+/* =========================================================
+   Background Video (Standard / 4K+)
+   ========================================================= */
+
+#backgroundVideo {
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  width: 100vw;
+  height: 100vh;
+
+  object-fit: cover;
+  object-position: center;
+
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* =========================================================
+   Main Game Container
+   ========================================================= */
+
+.game {
+  width: 900px;
+  max-width: calc(100% - 40px);
+
+  margin: max(5vh, 40px) auto;
+
+  position: relative;
+}
+
+/* =========================================================
+   Title
+   ========================================================= */
+
+h1 {
+  margin: 0;
+  color: #fff;
+  font-size: clamp(22px, 4vw, 38px);
+  text-align: center;
+  letter-spacing: 2px;
+  text-shadow: 3px 3px 0 #202020;
+}
+
+.subtitle {
+  margin: 18px 0 55px;
+  color: #777;
+  font-size: 11px;
+  text-align: center;
+}
+
+/* =========================================================
+   Boxes (Song, Guess & Guess History)
+   ========================================================= */
+
+.song-box,
+.guess-box,
+#guess-history {
+  border: 3px solid #fff;
+  padding: 28px;
+  background: #050505;
+}
+
+.song-box {
+  margin-bottom: 24px;
+}
+
+.guess-box {
+  margin-bottom: 24px;
+}
+
+/* Neue Guess-History Box (für die vergangenen Versuche) */
+#guess-history {
+  margin-bottom: 20px;
+  min-height: 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* =========================================================
+   Headers
+   ========================================================= */
+
+.song-header,
+.guess-box label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #fff;
+  font-size: 12px;
+}
+
+.star {
+  color: #ffff00;
+  font-size: 16px;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+/* =========================================================
+   Progress
+   ========================================================= */
+
+.progress-area {
+  margin-top: 32px;
+}
+
+.progress-time {
+  position: relative;
+  height: 22px;
+  color: #777;
+  font-size: 8px;
+}
+
+.progress-time span {
+  position: absolute;
+  transform: translateX(-50%);
+}
+
+.progress-time span:nth-child(1) {
+  left: 0.67%;
+}
+.progress-time span:nth-child(2) {
+  left: 3.33%;
+}
+.progress-time span:nth-child(3) {
+  left: 13.33%;
+}
+.progress-time span:nth-child(4) {
+  left: 53.33%;
+}
+.progress-time span:nth-child(5) {
+  left: 100%;
+}
+
+/* =========================================================
+   Progress bar
+   ========================================================= */
+
+.progress-track {
+  position: relative;
+  width: 100%;
+  height: 20px;
+}
+
+progress {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 100%;
+  height: 8px;
+  display: block;
+  border: none;
+  background: #222;
+}
+
+progress::-webkit-progress-bar {
+  background: #222;
+}
+progress::-webkit-progress-value {
+  background: #fff;
+}
+progress::-moz-progress-bar {
+  background: #fff;
+}
+
+/* =========================================================
+   Timeline markers
+   ========================================================= */
+
+.marker {
+  position: absolute;
+  top: -3px;
+  width: 2px;
+  height: 14px;
+  background: #555;
+}
+
+.marker-100 {
+  left: 0.67%;
+}
+.marker-500 {
+  left: 3.33%;
+}
+.marker-2000 {
+  left: 13.33%;
+}
+.marker-8000 {
+  left: 53.33%;
+}
+.marker-15000 {
+  right: 0;
+}
+
+.marker-highlighted {
+  background: #989898;
+}
+
+/* =========================================================
+   Play button
+   ========================================================= */
+
+.play-button {
+  width: 190px;
+  height: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  margin: 40px auto 5px;
+  border: 3px solid #fff;
+  background: #000;
+  color: #fff;
+  font-family: "Press Start 2P", monospace;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.play-button:hover {
+  color: #ffff00;
+  border-color: #ffff00;
+}
+
+.play-button:active {
+  transform: translateY(2px);
+}
+
+.play-icon {
+  font-size: 17px;
+}
+
+/* =========================================================
+   Guess input
+   ========================================================= */
+
+.guess-box label {
+  margin-bottom: 20px;
+}
+
+.guess-row {
+  display: flex;
+  gap: 14px;
+}
+
+#song_name {
+  min-width: 0;
+  flex: 1;
+  height: 58px;
+  padding: 0 16px;
+  border: 3px solid #fff;
+  outline: none;
+  background: #000;
+  color: #fff;
+  font-family: "Press Start 2P", monospace;
+  font-size: 11px;
+}
+
+#song_name::placeholder {
+  color: #555;
+}
+#song_name:focus {
+  border-color: #ffff00;
+}
+
+/* =========================================================
+   Submit
+   ========================================================= */
+
+.submit-button {
+  min-width: 155px;
+  height: 58px;
+  padding: 0 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 9px;
+  border: 3px solid #fff;
+  background: #000;
+  color: #fff;
+  font-family: "Press Start 2P", monospace;
+  font-size: 10px;
+  cursor: pointer;
+}
+
+.submit-button:hover {
+  color: #ffff00;
+  border-color: #ffff00;
+}
+
+.submit-button .star {
+  font-size: 13px;
+}
+
+/* =========================================================
+   Next song
+   ========================================================= */
+
+.next-button {
+  width: 100%;
+  height: 58px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border: 3px solid #fff;
+  background: #000;
+  color: #fff;
+  font-family: "Press Start 2P", monospace;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.next-button:hover {
+  color: #ffff00;
+  border-color: #ffff00;
+}
+
+/* =========================================================
+   Result text
+   ========================================================= */
+
+#info {
+  min-height: 25px;
+  margin: 25px 0;
+  color: #fff;
+  font-size: 11px;
+  line-height: 1.8;
+  text-align: center;
+}
+
+/* =========================================================
+   Footer
+   ========================================================= */
+
+footer {
+  margin-top: 40px;
+  color: #656565;
+  font-size: 8px;
+  text-align: center;
+}
+
+/* =========================================================
+   Song Selection (Left Sidebar)
+   ========================================================= */
+
+.song-selection {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+
+  right: calc(50% + 480px);
+  width: 280px;
+
+  padding: 22px;
+  border: 3px solid #fff;
+  background: #050505;
+  font-size: 11px;
+  z-index: 10;
+}
+
+.song-toggle {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 40px;
+  color: #777;
+  cursor: pointer;
+  user-select: none;
+}
+
+.song-toggle:hover {
+  color: #fff;
+}
+.toggle-star {
+  width: 14px;
+  color: #777;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+.song-toggle.active {
+  color: #fff;
+}
+.song-toggle.active .toggle-star {
+  color: #ffff00;
+}
+
+/* =========================================================
+   Right Sidebar (Stats & Sans)
+   ========================================================= */
+
+.stats-sidebar {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+
+  left: calc(50% + 480px);
+  width: 280px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  z-index: 10;
+}
+
+.stats-box {
+  width: 100%;
+  border: 3px solid #fff;
+  padding: 28px;
+  background: #050505;
+}
+
+.stat {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 32px;
+  color: #fff;
+  font-size: 11px;
+}
+
+.stat + .stat {
+  margin-top: 14px;
+}
+.stat-star {
+  color: #ffff00;
+  font-size: 16px;
+  width: 14px;
+  flex-shrink: 0;
+}
+
+.sans-box {
+  width: 100%;
+  border: 3px solid #fff;
+  padding: 28px;
+  background: #050505;
+}
+
+.sans-image {
+  width: 100%;
+  height: 180px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.sans-image img {
+  max-width: 100%;
+  max-height: 180px;
+  width: 200px;
+  object-fit: contain;
+  image-rendering: pixelated;
+}
+
+.sans-text {
+  margin-top: 18px;
+  min-height: 80px;
+  padding: 16px;
+  border: 3px solid #fff;
+  background: #000;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  color: #fff;
+  font-size: 9px;
+  line-height: 1.7;
+}
+
+@font-face {
+  font-family: "SansFont";
+  src: url("./font/sans.otf") format("truetype");
+  font-weight: lighter;
+  font-style: normal;
+}
+.sans-font {
+  font-size: 200%;
+  font-family: "SansFont", monospace;
+}
+
+/* =========================================================
+   Automatischer 70%-Zoom & Video-Anpassung für Full-HD (1920x1080)
+   ========================================================= */
+
+@media (max-width: 1920px) {
+  html {
+    zoom: 0.7;
+  }
+
+  /* Hier greift die 143%-Größe für das Video bei 1080p, um den Zoom auszugleichen */
+  #backgroundVideo {
+    width: 143vw;
+    height: 143vh;
+  }
+}
+
+/* =========================================================
+   Responsive Breakpoints für echte kleine Bildschirme / Laptops
+   ========================================================= */
+
+@media (max-width: 1350px) {
+  .stats-sidebar,
+  .song-selection {
+    position: static;
+    transform: none;
+    left: auto;
+    right: auto;
+    width: 100%;
+  }
+
+  .song-selection {
+    margin-bottom: 30px;
+  }
+
+  .stats-sidebar {
+    margin-top: 30px;
+  }
+
+  .stats-box,
+  .sans-box {
+    width: 100%;
+  }
+  .sans-image {
+    height: 160px;
+  }
+}
+
+@media (max-width: 650px) {
+  .game {
+    width: calc(100% - 24px);
+  }
+
+  .song-box,
+  .guess-box,
+  #guess-history {
+    padding: 20px;
+  }
+
+  .guess-row {
+    flex-direction: column;
+  }
+  .submit-button {
+    width: 100%;
+  }
+  .play-button {
+    width: 170px;
+  }
+  .progress-time {
+    font-size: 6px;
+  }
+}

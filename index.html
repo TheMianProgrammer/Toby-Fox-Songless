@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Toby Fox Songless</title>
+
+    <link rel="stylesheet" href="style.css" />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body>
+    <video autoplay muted loop id="backgroundVideo">
+      <source src="img/bg.mp4" type="video/mp4" />
+    </video>
+
+    <main class="game">
+      <h1>TOBY FOX SONGLESS</h1>
+
+      <p class="subtitle">Guess the Deltarune/Undertale song</p>
+
+      <!-- =========================================
+             LEFT: SONG SELECTION
+        ========================================== -->
+
+      <section class="song-selection">
+        <div
+          class="song-toggle active"
+          id="undertale-toggle"
+          onclick="ToggleSongs('undertale')"
+        >
+          <span class="toggle-star">*</span>
+          <span>UNDERTALE Songs</span>
+        </div>
+
+        <div
+          class="song-toggle"
+          id="deltarune12-toggle"
+          onclick="ToggleSongs('deltarune12')"
+        >
+          <span class="toggle-star">*</span>
+          <span>DELTARUNE Chapter 1+2 Songs</span>
+        </div>
+
+        <div
+          class="song-toggle"
+          id="deltarune34-toggle"
+          onclick="ToggleSongs('deltarune34')"
+        >
+          <span class="toggle-star">*</span>
+          <span>DELTARUNE Chapter 3+4 Songs</span>
+        </div>
+
+        <div
+          class="song-toggle"
+          id="deltarune5-toggle"
+          onclick="ToggleSongs('deltarune5')"
+        >
+          <span class="toggle-star">*</span>
+          <span>DELTARUNE Chapter 5 Songs</span>
+        </div>
+      </section>
+
+      <!-- =========================================
+             MAIN GAME
+        ========================================== -->
+
+      <section class="song-box">
+        <div class="song-header">
+          <span class="star">*</span>
+          <span>LISTEN TO THE SONG</span>
+        </div>
+
+        <div class="progress-area">
+          <div class="progress-time">
+            <span id="progress-time-1">0.1s</span>
+            <span id="progress-time-2" hidden>0.2s</span>
+            <span id="progress-time-3" hidden>2s</span>
+            <span id="progress-time-4" hidden>8s</span>
+            <span id="progress-time-5" hidden>15s</span>
+          </div>
+
+          <div class="progress-track">
+            <progress id="progress" max="15000" value="100"></progress>
+
+            <span
+              id="progress-marker-1"
+              class="marker marker-100 marker-highlighted"
+            ></span>
+            <span id="progress-marker-2" class="marker marker-500"></span>
+            <span id="progress-marker-3" class="marker marker-2000"></span>
+            <span id="progress-marker-4" class="marker marker-8000"></span>
+            <span id="progress-marker-5" class="marker marker-15000"></span>
+          </div>
+        </div>
+
+        <button class="play-button" onclick="PlaySong()">
+          <span class="play-icon">▶</span>
+          PLAY
+        </button>
+      </section>
+
+      <section class="guess-box">
+        <label for="song_name">
+          <span class="star">*</span>
+          NAME THE TRACK
+        </label>
+
+        <div class="guess-row">
+          <input
+            list="songs"
+            id="song_name"
+            autocomplete="off"
+            placeholder="Type a song name..."
+            oninput="OnInputChange()"
+          />
+
+          <datalist id="songs"></datalist>
+
+          <button class="submit-button" onclick="Guess()" id="submit-button">
+            <span class="star" id="submit-text">*</span>
+            SKIP
+          </button>
+        </div>
+      </section>
+
+      <button
+        id="next_song"
+        class="next-button"
+        onclick="RegenerateSong()"
+        style="display: none"
+      >
+        <span class="star">*</span>
+        NEXT SONG
+      </button>
+
+      <p id="info"></p>
+
+      <audio id="play_audio">
+        <source id="play_audio_source" type="audio/ogg" />
+      </audio>
+
+      <section class="guess-history" id="guess-history"></section>
+
+      <footer>Toby Fox Songless</footer>
+      <footer>
+        Not affiliated with or endorsed by Toby Fox / Undertale / Deltarune.
+        This is a unofficial fan-made Project
+      </footer>
+
+      <!-- =========================================
+             RIGHT SIDEBAR
+        ========================================== -->
+
+      <aside class="stats-sidebar">
+        <div class="stats-box">
+          <div class="stat">
+            <span class="stat-star">*</span>
+            <span id="stat-streak">Streak: 0</span>
+          </div>
+
+          <div class="stat">
+            <span class="stat-star">*</span>
+            <span>Points: 0</span>
+          </div>
+        </div>
+
+        <div class="sans-box" onclick="AdvanceSansStory()">
+          <div class="sans-image">
+            <img src="img/sans/Happy.png" alt="Sans" id="sanses" />
+          </div>
+
+          <div class="sans-text">
+            <span class="stat-star">*</span>
+            <span id="sans-lines" class="sans-font"
+              >Hey. Iv'e got some news for you.</span
+            >
+          </div>
+        </div>
+      </aside>
+    </main>
+
+    <script src="src/guess.js"></script>
+  </body>
+</html>
