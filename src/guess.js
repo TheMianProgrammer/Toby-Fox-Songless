@@ -345,7 +345,8 @@ var deltarune_chapter_5_songs = {
 
 var all_songs = shuffleObject(undertale_songs);
 
-var streak = 0;
+var streak = Number(localStorage.getItem("streak")) || 0;
+stat_streak.innerText = "Streak: " + streak;
 
 var sanses_images = [
   "img/sans/Happy.png",
@@ -359,6 +360,8 @@ var sanses_images = [
   "img/sans/MoreMoreConcernedMoreLookingLeft.png",
   "img/sans/MoreMoreMoreConcernedMoreLookingLeft.png",
 ];
+
+var dailyStreak = -1;
 
 var currentSongId = 0;
 function GenerateSongs() {
@@ -467,7 +470,29 @@ function HideAllMarkers() {
     .classList.remove("marker-highlighted");
 }
 
-var points = 0;
+function UpdateDailyStreak(check = false) {
+  dailyStreak = localStorage.getItem("DailyStreak") || 0;
+  var lastDay = localStorage.getItem("lastDay");
+
+  var today = new Date();
+  var currentDay = today.toISOString().split("T")[0];
+
+  if (!check && lastDay != currentDay) {
+    if (dailyStreak == 0) {
+      dailyStreak = 1;
+    } else {
+      dailyStreak++;
+    }
+    localStorage.setItem("lastDay", currentDay);
+    localStorage.setItem("DailyStreak", dailyStreak);
+  }
+  document.getElementById("daily-streak").innerText =
+    "Daily Streak: " + dailyStreak;
+}
+
+var points = Number(localStorage.getItem("points")) || 0;
+document.getElementById("points").innerText = "Points: " + points;
+
 function Guess() {
   if (time > 15000) return;
   var UserGuess = document.getElementById("song_name").value;
@@ -480,7 +505,9 @@ function Guess() {
     else if (time < 15000) points += 1;
     time = 1000000;
     HideAllMarkers();
+    UpdateDailyStreak();
     streak += 1;
+    localStorage.setItem("streak", streak);
     stat_streak.innerText = "Streak: " + streak;
     if (currentSong == "UT - MEGALOVANIA") {
       sanses.src = sanses_images[4];
@@ -552,6 +579,7 @@ function Guess() {
           .getElementById("progress-marker-5")
           .classList.remove("marker-highlighted");
         streak = 0;
+        localStorage.setItem("streak", streak);
         currentSansImage = 0;
         UpdateSans();
         stat_streak.innerText = "Streak: 0";
@@ -563,6 +591,7 @@ function Guess() {
     }
   }
   document.getElementById("points").innerText = "Points: " + points;
+  localStorage.setItem("points", points);
   song_name.value = "";
   submit_button.lastChild.nodeValue = "SKIP";
 }
@@ -599,15 +628,17 @@ var voice_sans_disappear = new Audio("sound/voice_sans_disappear.wav");
 voice_sans_appear.load();
 voice_sans_disappear.load();
 
-var sansesActive = false;
-function ToggleSanses() {
+var sansesActive = localStorage.getItem("sanses") === "true";
+InitSans();
+
+function InitSans(voice = false) {
   var toggle_sanses = document.getElementById("toggle-sanses");
   toggle_sanses.innerHTML = "";
-  sansesActive = !sansesActive;
   var toggle_star = document.createElement("span");
   toggle_star.innerHTML = "*";
   toggle_star.classList.add("toggle-star");
   if (!sansesActive) {
+    console.log("showen");
     var disable_sans = document.createElement("span");
     disable_sans.classList.add("song-toggle");
     disable_sans.style = "font-size: small";
@@ -616,9 +647,12 @@ function ToggleSanses() {
     toggle_sanses.appendChild(disable_sans);
     document.getElementById("sans-box").removeAttribute("hidden");
 
-    let voiceClone = voice_sans_appear.cloneNode();
-    voiceClone.play();
+    if (voice) {
+      let voiceClone = voice_sans_appear.cloneNode();
+      voiceClone.play();
+    }
   } else {
+    console.log("hidden");
     var enable_sans = document.createElement("span");
     enable_sans.classList.add("song-toggle");
     enable_sans.classList.add("active");
@@ -627,9 +661,18 @@ function ToggleSanses() {
     enable_sans.prepend(toggle_star);
     toggle_sanses.appendChild(enable_sans);
     document.getElementById("sans-box").setAttribute("hidden", true);
-    let voiceClone = voice_sans_disappear.cloneNode();
-    voiceClone.play();
+
+    if (voice) {
+      let voiceClone = voice_sans_disappear.cloneNode();
+      voiceClone.play();
+    }
   }
+}
+
+function ToggleSanses() {
+  sansesActive = !sansesActive;
+  InitSans(true);
+  localStorage.setItem("sanses", sansesActive);
 }
 
 var sansVoice = new Audio("sound/voice_sans.mp3");
@@ -805,3 +848,4 @@ function ToggleSongs(song) {
 
 GenerateSongs();
 RegenerateSong();
+UpdateDailyStreak(true);
