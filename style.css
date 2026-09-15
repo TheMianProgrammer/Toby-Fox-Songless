@@ -581,6 +581,49 @@ footer {
   }
 }
 /* =========================================================
+   UNDERTALE STYLED DROPDOWN (<select>)
+   ========================================================= */
+select#daily-streak-selection {
+  width: 100%;
+  padding: 10px 12px;
+  margin-bottom: 20px;
+  background: #000;
+  color: #fff;
+  border: 3px solid #fff;
+  font-family: "Press Start 2P", monospace;
+  font-size: 8px;
+  line-height: 1.6;
+  outline: none;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url('data:image/svg+xml;utf8,<svg fill="%23ffff00" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+}
+
+select#daily-streak-selection:hover,
+select#daily-streak-selection:focus {
+  border-color: #ffff00;
+  color: #ffff00;
+}
+
+select#daily-streak-selection option {
+  background: #000;
+  color: #fff;
+  padding: 10px;
+  font-family: "Press Start 2P", monospace;
+  font-size: 10px;
+}
+
+select#daily-streak-selection option:hover,
+select#daily-streak-selection option:checked {
+  background: #ffff00 !important;
+  color: #000 !important;
+}
+
+/* =========================================================
    Volume Slider
    ========================================================= */
 

@@ -33,7 +33,7 @@
       <p class="subtitle">Guess the Deltarune/Undertale song</p>
 
       <!-- =========================================
-             LEFT: SONG SELECTION
+            LEFT: SONG SELECTION
         ========================================== -->
 
       <section class="song-selection">
@@ -75,7 +75,7 @@
       </section>
 
       <!-- =========================================
-             MAIN GAME
+            MAIN GAME
         ========================================== -->
 
       <section class="song-box">
@@ -179,11 +179,23 @@
       </footer>
 
       <!-- =========================================
-             RIGHT SIDEBAR
+            RIGHT SIDEBAR
         ========================================== -->
 
       <aside class="stats-sidebar">
         <div class="stats-box">
+          <select id="daily-streak-selection">
+            <option value="1">Don't loose streak</option>
+            <option value="2">
+              Lose streak when not guessing song in a day
+            </option>
+            <option value="3">
+              Lose streak when not guessing song in a day first try
+            </option>
+            <option value="4">
+              Lose streak when not guessing song in a day in 100ms
+            </option>
+          </select>
           <div class="stat">
             <span class="stat-star">*</span>
             <span id="daily-streak">Daily Streak: 0</span>

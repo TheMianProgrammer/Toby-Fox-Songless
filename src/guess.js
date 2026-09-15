@@ -471,17 +471,24 @@ function HideAllMarkers() {
 }
 
 function UpdateDailyStreak(check = false) {
-  dailyStreak = localStorage.getItem("DailyStreak") || 0;
+  dailyStreak = Number(localStorage.getItem("DailyStreak")) || 0;
   var lastDay = localStorage.getItem("lastDay");
+  var looseDailyStreak = localStorage.getItem("looseDailyStreak") === "true";
 
   var today = new Date();
   var currentDay = today.toISOString().split("T")[0];
 
-  if (!check && lastDay != currentDay) {
+  if (!check && lastDay !== currentDay) {
     if (dailyStreak == 0) {
       dailyStreak = 1;
     } else {
-      dailyStreak++;
+      var lastDate = new Date(lastDay);
+      var currentDate = new Date(currentDay);
+
+      var difference = (currentDate - lastDate) / (1000 * 60 * 60 * 24);
+
+      if (looseDailyStreak && difference > 1) dailyStreak = 1;
+      else dailyStreak++;
     }
     localStorage.setItem("lastDay", currentDay);
     localStorage.setItem("DailyStreak", dailyStreak);
@@ -490,8 +497,52 @@ function UpdateDailyStreak(check = false) {
     "Daily Streak: " + dailyStreak;
 }
 
+var firstGuess = true;
+
 var points = Number(localStorage.getItem("points")) || 0;
 document.getElementById("points").innerText = "Points: " + points;
+
+function InitDailySettings() {
+  var select = document.getElementById("daily-streak-selection");
+  if (!select) return;
+
+  var loose = localStorage.getItem("looseDailyStreak") === "true";
+  var resetFail = localStorage.getItem("ResetOnFail") === "true";
+  var reset100 = localStorage.getItem("ResetOn100") === "true";
+
+  if (reset100) select.value = "4";
+  else if (resetFail) select.value = "3";
+  else if (loose) select.value = "2";
+  else select.value = "1";
+}
+
+document
+  .getElementById("daily-streak-selection")
+  .addEventListener("change", () => {
+    var ele = document.getElementById("daily-streak-selection");
+    switch (ele.value) {
+      case "1":
+        localStorage.setItem("looseDailyStreak", "false");
+        localStorage.setItem("ResetOn100", "false");
+        localStorage.setItem("ResetOnFail", "false");
+        break;
+      case "2":
+        localStorage.setItem("looseDailyStreak", "true");
+        localStorage.setItem("ResetOn100", "false");
+        localStorage.setItem("ResetOnFail", "false");
+        break;
+      case "3":
+        localStorage.setItem("looseDailyStreak", "true");
+        localStorage.setItem("ResetOnFail", "true");
+        localStorage.setItem("ResetOn100", "false");
+        break;
+      case "4":
+        localStorage.setItem("looseDailyStreak", "true");
+        localStorage.setItem("ResetOnFail", "true");
+        localStorage.setItem("ResetOn100", "true");
+        break;
+    }
+  });
 
 function Guess() {
   if (time > 15000) return;
@@ -509,6 +560,7 @@ function Guess() {
     streak += 1;
     localStorage.setItem("streak", streak);
     stat_streak.innerText = "Streak: " + streak;
+    firstGuess = false;
     if (currentSong == "UT - MEGALOVANIA") {
       sanses.src = sanses_images[4];
       SansWriteSentence("I don't like this song", false);
@@ -530,6 +582,11 @@ function Guess() {
     }
     switch (time) {
       case 100:
+        if (firstGuess && localStorage.getItem("ResetOn100") == "true") {
+          localStorage.setItem("DailyStreak", 0);
+          document.getElementById("daily-streak").innerText =
+            "Daily Streak: " + dailyStreak;
+        }
         document.getElementById("progress-time-2").removeAttribute("hidden");
         document.getElementById("progress-time-1").setAttribute("hidden", true);
         document
@@ -587,6 +644,12 @@ function Guess() {
         points -= Math.floor(points / 2);
         time = 1000000;
         next_song.style = "display:flex";
+        if (firstGuess && localStorage.getItem("ResetOnFail") == "true") {
+          localStorage.setItem("DailyStreak", 0);
+          document.getElementById("daily-streak").innerText =
+            "Daily Streak: " + dailyStreak;
+        }
+        firstGuess = false;
         break;
     }
   }
@@ -713,7 +776,7 @@ function AdvanceSansStory() {
       currentDialouge++;
       break;
     case 7:
-      SansWriteSentence("( btw points aren't useless anymore )");
+      SansWriteSentence("( btw points are kindof useless )");
       currentDialouge++;
       break;
     case 90:
@@ -849,3 +912,4 @@ function ToggleSongs(song) {
 GenerateSongs();
 RegenerateSong();
 UpdateDailyStreak(true);
+InitDailySettings();
