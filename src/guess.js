@@ -776,7 +776,7 @@ function AdvanceSansStory() {
       currentDialouge++;
       break;
     case 7:
-      SansWriteSentence("( btw points are kindof useless )");
+      SansWriteSentence("( btw points are kind of useless )");
       currentDialouge++;
       break;
     case 90:
