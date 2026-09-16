@@ -842,15 +842,34 @@ function RegenerateSong() {
 }
 
 var progressInterval = null;
+var isLoading = false;
+var safteyLoadTimeout;
 function PlaySong() {
+  if (isLoading) return;
+
+  isLoading = true;
+
+  clearTimeout(safteyLoadTimeout);
   clearInterval(progressInterval);
+
+  progressInterval = null;
+
+  play_audio.pause();
   play_audio.currentTime = 0;
+
+  safteyLoadTimeout = setTimeout(() => {
+    isLoading = false;
+  }, 1000);
 
   var playPromise = play_audio.play();
 
   if (playPromise !== undefined) {
     playPromise
       .then(() => {
+        clearTimeout(safteyLoadTimeout);
+
+        isLoading = false;
+
         var startTime = performance.now();
 
         progressInterval = setInterval(function () {
@@ -860,9 +879,9 @@ function PlaySong() {
 
           if (elapsed >= time) {
             clearInterval(progressInterval);
+            progressInterval = null;
 
             play_audio.pause();
-
             play_audio.currentTime = 0;
 
             progress.value = time;
@@ -870,7 +889,7 @@ function PlaySong() {
         }, 10);
       })
       .catch((error) => {
-        if (!error.includes("NotAllowedError")) alert("Audio Error: " + error);
+        if (error.name !== "NotAllowedError") alert("Audio Error: " + error);
       });
   }
 }
