@@ -889,7 +889,9 @@ function PlaySong() {
         }, 10);
       })
       .catch((error) => {
-        if (error.name !== "NotAllowedError") alert("Audio Error: " + error);
+        if (error.name === "NotAllowedError") return;
+        if (error.name === "AbortError") return;
+        alert("Audio Error: " + error);
       });
   }
 }
