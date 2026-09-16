@@ -138,6 +138,7 @@ var deltarune_chapter12_songs = {
   "./sound/deltarune/Chapter12/Cyber Battle (Solo).ogg":
     "C2 - Cyber Battle (Solo)",
   "./sound/deltarune/Chapter12/Cyber Battle.ogg": "C2 - Cyber Battle",
+  "./sound/deltarune/Chapter12/Dialtone.ogg": "C2 - Dialtone",
   "./sound/deltarune/Chapter12/Darkness Falls.ogg": "C1 - Darkness Falls",
   "./sound/deltarune/Chapter12/Don't Forget.ogg": "C1 - Don't Forget",
   "./sound/deltarune/Chapter12/Empty Town.ogg": "C1 - Empty Town",
