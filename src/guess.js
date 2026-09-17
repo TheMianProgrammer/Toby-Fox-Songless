@@ -829,7 +829,7 @@ function RegenerateSong() {
   PlaySong();
 
   currentSongId++;
-  if (currentSongId - 1 > Object.keys(all_songs).length) {
+  if (currentSongId - 1 >= Object.keys(all_songs).length) {
     currentSongId = 0;
     currentDialouge = 90;
     SansWriteSentence("Wow you got it.");
