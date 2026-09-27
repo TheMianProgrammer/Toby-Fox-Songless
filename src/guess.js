@@ -411,7 +411,7 @@ function UpdateSans() {
 
   if (currentSansImage > sanses_images.length) {
     sanses.src = sanses_images[0];
-    SansWriteSentence("Congrats, you beat my brother.", (sound = false));
+    SansWriteSentence("congrats, you beat my brother.", (sound = false));
     hasBeatenPapyrus = true;
     return;
   }
@@ -428,7 +428,7 @@ function UpdateSans() {
       break;
     case 14:
       if (hasBeatenPapyrus) return;
-      SansWriteSentence("bro stop", (sound = false));
+      SansWriteSentence("bro. stop.", (sound = false));
       break;
     case 16:
       if (hasBeatenPapyrus) return;
@@ -438,7 +438,7 @@ function UpdateSans() {
       );
       break;
     case 20:
-      SansWriteSentence("Okay you beat my score, congrats.", (sound = false));
+      SansWriteSentence("okay you beat my bro, cool.", (sound = false));
       sanses.src = sanses_images[0];
       break;
   }
@@ -564,10 +564,10 @@ function Guess() {
     firstGuess = false;
     if (currentSong == "UT - MEGALOVANIA") {
       sanses.src = sanses_images[4];
-      SansWriteSentence("I don't like this song", false);
+      SansWriteSentence("i don't like this song", false);
     }
     if (currentSong == "UT - sans.") {
-      SansWriteSentence("I like this song", false);
+      SansWriteSentence("i like this song", false);
       sanses.src = sanses_images[0];
     }
     UpdateSans();
@@ -668,7 +668,7 @@ function SansWriteSentence(text, sound = true) {
   clearTimeout(sansCharTimeout);
   SansWriteChar(0, text, undefined, sound);
 }
-SansWriteSentence("Hey. I've got some news for ya.");
+SansWriteSentence("hey. i've got some news for ya.");
 function SansWriteChar(index, text, time = 80, sound = true) {
   try {
     if (sound && !sansesActive) {
@@ -747,15 +747,15 @@ var currentDialouge = 0;
 function AdvanceSansStory() {
   switch (currentDialouge) {
     case 0:
-      SansWriteSentence("So its simple");
+      SansWriteSentence("so. its simple");
       currentDialouge++;
       break;
     case 1:
-      SansWriteSentence("I've found some random songs laying on the ground.");
+      SansWriteSentence("i found some songs laying somewhere.");
       currentDialouge++;
       break;
     case 2:
-      SansWriteSentence("And i've came up with a cool idea.");
+      SansWriteSentence("and i tought 'bout a cool idea.");
       currentDialouge++;
       break;
     case 3:
@@ -763,17 +763,17 @@ function AdvanceSansStory() {
       currentDialouge++;
       break;
     case 4:
-      SansWriteSentence("And you have to guess it.");
+      SansWriteSentence("and you gotta guess it.");
       currentDialouge++;
       break;
     case 5:
-      SansWriteSentence("It's that easy.");
+      SansWriteSentence("it's that easy.");
       currentDialouge++;
       break;
     case 6:
       SansWriteSentence(
-        "Try building up a streak and beating my brother (his streak is 19)",
-      );
+        "try building up a streak and beat my brother (his streak is 19)",
+      ); // idk, maybe not too lazy
       currentDialouge++;
       break;
     case 7:
@@ -781,12 +781,16 @@ function AdvanceSansStory() {
       currentDialouge++;
       break;
     case 90:
-      SansWriteSentence("You listened trough every song i found.");
+      SansWriteSentence("you listened trough every song i found.");
       sanses.src = sanses_images[0];
       currentDialouge++;
       break;
     case 91:
-      SansWriteSentence("Congrats!");
+      SansWriteSentence("congrats!");
+      currentDialouge++;
+      break;
+    case 92:
+      SansWriteSentence("( now i have to find new songs... )");
       currentDialouge++;
       break;
   }
@@ -832,7 +836,7 @@ function RegenerateSong() {
   if (currentSongId - 1 > Object.keys(all_songs).length) {
     currentSongId = 0;
     currentDialouge = 90;
-    SansWriteSentence("Wow you got it.");
+    SansWriteSentence("wow you got it.");
     return;
   }
 
