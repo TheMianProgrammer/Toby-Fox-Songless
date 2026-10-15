@@ -789,6 +789,14 @@ function AdvanceSansStory() {
       SansWriteSentence("Congrats!");
       currentDialouge++;
       break;
+case 92:
+      SansWriteSentence("Now you can finally do something else like");
+      currentDialouge++;
+      break;
+    case 93:
+      SansWriteSentence("Doing nothing at all");
+      currentDialouge++;
+      break;
   }
 }
 
